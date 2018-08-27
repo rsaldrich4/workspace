@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="iso-8859-7">
+</head>
+<div class="background-image">
+  <header>
+    <nav class="navigation-bar">
+      <ul class="navigation-items">
+        <li id="about-list-item"><a href="#about">About</a></li>
+        <li id="contact-list-item"><a href="#contact">Contact</a></li>
+        <li id="blog-list-item">
+          <%= link_to "Blog", posts_path %>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <body>
+    <div class="first_section">
+      <h1 class="title-1">Hi, I'm Rick</h1>
+      <h2 id="weather-summary"></h2>
+      <h2 class="title-2">Welcome to my website</h2>
+    </div>
+</div>
+<div class="container">
+  <div class="second_section">
+    <div id="about">
+      <h2 class="about-title">About Me</h2>
+    </div>
+    <div class="skills_passions_container">
+      <div class="skills">
+        <h3 class="skills_title">My skills</h3>
+        <ul class="skills-list">
+          <li id="skill-1">Sitting</li>
+          <li id="skill-2">Talking</li>
+          <li id="skill-3">Having a wife</li>
+          <li id="skill-4">I can walk</li>
+        </ul>
+      </div>
+      <div class="passions">
+        <h3 class="passions_title">My Passions</h3>
+        <ul class="passions-list">
+          <li id="passion-1">Music</li>
+          <li id="passion-2">Video Games</li>
+          <li id="passion-3">Traveling</li>
+          <li id="passion-4">Sports</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div id="contact">
+    <h2 class="contact-title">Contact Me</h2>
+    <form id="contact_me" action="https://formspree.io/antoine@productschool.com" method="POST">
+      <input required="required" type="text" name="name" placeholder="Your name" />
+      <input required="required" type="email" name="_replyto" placeholder="Your email">
+      <textarea required="required" placeholder="I'd love to hear from you - send me a message!"></textarea>
+      <input class="submit-button" type="submit" value="Send">
+    </form>
+  </div>
+</div>
+<footer>
+  <div class="copyright">
+    <p>Copyright (c) 2017 Copyright Antoine Krajnc All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+
+  navigator.geolocation.getCurrentPosition(function(position) {
+  
+  
+  const productSchoolLat = position.coords.latitude || "37.796465";
+  const productSchoolLng = position.coords.longitude || "-122.402492";
+  
+  $.ajax({
+    url: 'api/v1/get_weather',
+    type: 'GET',
+    data: { lat: productSchoolLat, lng: productSchoolLng } ,
+    contentType: 'application/json; charset=utf-8',
+    success: function (response) {
+      $('#weather-summary').text(response.daily.summary);
+    },
+    error: function (error) {
+      console.log(error);
+    }
+  });
+});
+
+
+</script>
+</body>
+<html>
